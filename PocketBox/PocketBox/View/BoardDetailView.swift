@@ -73,6 +73,7 @@ struct BoardDetailView: View {
                         do {
                             print("Task1")
                             postDetails = try await postNetworking.getPostDetail(url: boardurl, postId: postId)
+                            
                         }
                     }
                     isTapped = true

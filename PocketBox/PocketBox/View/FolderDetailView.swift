@@ -1,54 +1,25 @@
 //
-//  HomeView.swift
+//  FolderDetailView.swift
 //  PocketBox
 //
-//  Created by MBSoo on 2023/06/10.
+//  Created by MBSoo on 2023/06/14.
 //
 
 import SwiftUI
 
-struct HomeView: View {
-    let cols = [GridItem(.adaptive(minimum: 100)),GridItem(.adaptive(minimum: 100)),GridItem(.adaptive(minimum: 100))]
+struct FolderDetailView: View {
+    @ObservedObject var fileNetworking: FileViewModel
+    var folderName: String
+    @State var filename = ""
     @State var openFile = false
     @State var showAlert = false
-    @State var filename = ""
+    @State var files:[String:URL] = [:]
     @State var imageData = Data()
-    @State var files: [String:URL] = [:]
-    @State var file = File(statusCode: 0, responseMessage: "", data: FolderResponse())
-    
-    @State var registerFoler = false
-    @State var folderName = ""
-    @State var folders: [String] = []
-    @ObservedObject var fileNetworking: FileViewModel
-    @ObservedObject var userVM: UserViewModel
+    let cols = [GridItem(.adaptive(minimum: 100)),GridItem(.adaptive(minimum: 100)),GridItem(.adaptive(minimum: 100))]
     var body: some View {
         VStack {
-            HeaderView()
-            HStack {
-                Text("파일")
-                    .font(.system(size: 17, weight: .bold, design: .rounded))
-                Spacer()
-                Button {
-                    registerFoler = true
-                } label: {
-                    Image(systemName: "plus.rectangle.on.folder.fill")
-                        .resizable()
-                        .frame(width: 20, height: 20)
-                }.alert("폴더의 이름을 적어주세요",isPresented: $registerFoler) {
-                    TextField("이름", text: $folderName)
-                        .border(.bar)
-                    Button("취소", role: .destructive) {
-                        Text("취소")
-                    }
-                    Button(role: .cancel) {
-                        folders.append(folderName)
-                    } label: {
-                        Text("확인")
-                    }
-
-                }
-
-            }.padding()
+            Text("\(folderName)")
+                .font(.system(size: 25, weight: .bold, design: .rounded))
             HStack{
                 TextField("", text: $filename)
                     .border(.black, width: 1)
@@ -86,21 +57,6 @@ struct HomeView: View {
                 }
                 
             }
-            HStack {
-                ForEach(folders, id: \.self) { row in
-                    NavigationLink {
-                        FolderDetailView(fileNetworking: fileNetworking, folderName: row)
-                    } label: {
-                        VStack {
-                            Image(systemName: "folder")
-                                .resizable()
-                                .frame(width: 80, height: 80)
-                                .foregroundColor(.yellow.opacity(0.4))
-                            Text("\(row)")
-                        }
-                    }.isDetailLink(false)
-                }
-            }
             LazyVGrid(columns: cols) {
                 ForEach(files.keys.sorted(), id: \.self) { key in
                     VStack {
@@ -121,9 +77,3 @@ struct HomeView: View {
         }
     }
 }
-
-//struct HomeView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        HomeView()
-//    }
-//}

@@ -44,19 +44,19 @@ struct LoginView: View {
                                 .stroke(Color.yellow,lineWidth: 1)
                         )
                 }.padding()
-                HStack {
-                    Text("이름")
-                        .font(.system(size: 15, weight: .light))
-                        .frame(width: 70)
-                    TextField("", text: $name)
-                        .onChange(of: name, perform: { _ in
-                            userVM.name = name
-                        })
-                        .overlay(
-                            RoundedRectangle(cornerRadius: 5)
-                                .stroke(Color.yellow, lineWidth: 1)
-                        )
-                }.padding(.horizontal)
+//                HStack {
+//                    Text("이름")
+//                        .font(.system(size: 15, weight: .light))
+//                        .frame(width: 70)
+//                    TextField("", text: $name)
+//                        .onChange(of: name, perform: { _ in
+//                            userVM.name = name
+//                        })
+//                        .overlay(
+//                            RoundedRectangle(cornerRadius: 5)
+//                                .stroke(Color.yellow, lineWidth: 1)
+//                        )
+//                }.padding(.horizontal)
                 HStack {
                     Text("비밀번호")
                         .font(.system(size: 15, weight: .light))
